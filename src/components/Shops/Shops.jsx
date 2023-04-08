@@ -14,11 +14,24 @@ const Shops = () => {
       .then((data) => setProducts(data));
   }, []);
 
+  // use the localStorage 
   useEffect(() => {
     const storedCart = getShoppingCart();
-    console.log(storedCart);
-
-  }, [])
+    const saveCart = [];
+    // console.log(storedCart);
+    for(const  id in storedCart){
+      // console.log(id);
+      const addedProduct = products.find(product => product.id === id)
+      
+      if (addedProduct){
+        const quantity = storedCart[id];
+        addedProduct.quantity = quantity;
+        saveCart.push(addedProduct);
+      }
+    }
+    setCart(saveCart);
+  }, [products]) 
+  // set the dependency 
 
   const handleAddToCart =(product) =>{
     // console.log(product)
